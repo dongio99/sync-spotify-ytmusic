@@ -1,10 +1,13 @@
 [Unit]
-Description=Sync Spotify <-> YouTube Music all'accensione del PC (max una volta al giorno)
+Description=Sync Spotify <-> YouTube Music all'accensione e ogni giorno a PC acceso (max una volta al giorno)
 
 [Timer]
-# Parte 2 minuti dopo l'avvio (con linger attivo: dall'accensione, anche senza login).
-# Il limite di una volta al giorno lo applica lo script con --scheduled.
+# 2 minuti dopo l'avvio (con linger attivo: dall'accensione, anche senza login)
 OnStartupSec=2min
+# Controllo giornaliero se il PC resta acceso per più giorni
+OnCalendar=*-*-* 12:00
+AccuracySec=1min
+# Il limite di una volta al giorno lo applica lo script con --scheduled
 
 [Install]
 WantedBy=timers.target

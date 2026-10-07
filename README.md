@@ -106,8 +106,9 @@ deploy/install_timer.sh
 Installa un timer systemd utente che parte **2 minuti dopo l'accensione del PC**, anche prima del login
 (linger attivo). Lo script gira con `--scheduled`: se oggi c'è già stata una sincronizzazione riuscita
 non fa nulla, quindi i riavvii successivi nella stessa giornata non la ripetono. Se quella all'accensione
-fallisce, ci riprova al riavvio successivo. Se il PC resta acceso per giorni senza riavvii, la
-sincronizzazione automatica non riparte finché non lo riaccendi: puoi sempre lanciarla a mano.
+fallisce, ci riprova al riavvio successivo. Se il PC resta acceso per più giorni, c'è anche un controllo
+giornaliero alle 12:00 (`OnCalendar` in `deploy/spotify-ytm-sync.timer`), con lo stesso limite di una
+volta al giorno.
 
 ## Comandi utili
 ```bash
