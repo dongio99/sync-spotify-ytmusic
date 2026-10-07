@@ -158,7 +158,8 @@ class YTMSide:
             if r.status_code == 401:
                 self._refresh()
                 raise TransientHTTPError(f"{what}: token rifiutato, rinnovato")
-            if r.status_code == 429 or r.status_code >= 500:
+            # 409 "SERVICE_UNAVAILABLE / The operation was aborted" capita sulle scritture ravvicinate: è temporaneo
+            if r.status_code in (409, 429) or r.status_code >= 500:
                 ra = r.headers.get("Retry-After")
                 raise TransientHTTPError(f"{what}: HTTP {r.status_code}", float(ra) if ra and ra.isdigit() else None)
             if r.status_code >= 400:
