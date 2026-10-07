@@ -1,0 +1,33 @@
+# Copia questo file in config.toml e compila almeno spotify_playlist.
+
+[playlist]
+# Link, URI o ID della playlist Spotify collaborativa
+spotify_playlist = "https://open.spotify.com/playlist/XXXXXXXXXXXXXXXXXXXXXX"
+# Lascia vuoto: alla prima esecuzione la playlist YouTube Music viene creata con lo stesso nome
+ytm_playlist_id = ""
+# PRIVATE, UNLISTED o PUBLIC (solo alla creazione)
+ytm_privacy = "PRIVATE"
+
+[ai]
+model = "claude-haiku-4-5"     # alternativa più precisa: "claude-sonnet-5-5"
+max_web_searches = 2           # ricerche web per singola decisione
+max_ai_calls_per_run = 25      # oltre, i dubbi vengono rimandati alla prossima esecuzione
+
+[matching]
+score_high = 90                # da qui in su: stesso brano senza chiedere all'IA
+score_low = 60                 # sotto: brani diversi. In mezzo: decide l'IA
+tie_margin = 2                 # candidati entro 2 punti dal migliore = "a parità"
+duration_tolerance_s = 10
+not_found_max_attempts = 5     # dopo N esecuzioni senza corrispettivo, il brano viene lasciato stare
+extra_tail_keywords = []       # altre code da ignorare nei titoli, es. ["sanremo 2024"]
+
+[safety]
+max_add_absolute = 15          # più aggiunte di così in un colpo -> stop e avviso
+max_add_fraction = 0.30
+max_remove_absolute = 10       # più rimozioni di così in un colpo -> stop e avviso
+max_remove_fraction = 0.20
+removal_confirm_runs = 2       # esecuzioni consecutive in cui un brano deve risultare tolto da Spotify
+
+[notifications]
+alert_repeat_days = 3          # lo stesso avviso al massimo ogni N giorni
+failure_alert_after = 3        # avviso dopo N esecuzioni fallite di fila

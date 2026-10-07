@@ -1,0 +1,12 @@
+[Unit]
+Description=Sync giornaliero Spotify <-> YouTube Music
+
+[Timer]
+OnCalendar=daily
+# Se il PC era spento all'ora prevista, parte alla prima accensione utile
+Persistent=true
+# Ritardo casuale: lo script comunque aspetta che la rete sia pronta
+RandomizedDelaySec=10min
+
+[Install]
+WantedBy=timers.target

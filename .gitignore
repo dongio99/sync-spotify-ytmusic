@@ -1,0 +1,9 @@
+.venv/
+.env
+config.toml
+secrets/
+data/
+logs/
+__pycache__/
+.pytest_cache/
+*.tmp

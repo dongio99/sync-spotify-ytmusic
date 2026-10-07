@@ -1,0 +1,5 @@
+spotipy>=2.26
+ytmusicapi>=1.12
+anthropic>=1.11
+rapidfuzz>=3.14
+requests>=2.32

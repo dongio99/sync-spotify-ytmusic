@@ -1,0 +1,11 @@
+[Unit]
+Description=Sync playlist Spotify <-> YouTube Music
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/spotify-ytm-sync
+ExecStart=%h/spotify-ytm-sync/.venv/bin/python %h/spotify-ytm-sync/sync.py
+TimeoutStartSec=45min
+Nice=10
