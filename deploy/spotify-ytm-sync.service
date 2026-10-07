@@ -6,6 +6,7 @@ After=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=%h/spotify-ytm-sync
-ExecStart=%h/spotify-ytm-sync/.venv/bin/python %h/spotify-ytm-sync/sync.py
+# --scheduled: se oggi la sincronizzazione è già riuscita, non fa nulla
+ExecStart=%h/spotify-ytm-sync/.venv/bin/python %h/spotify-ytm-sync/sync.py --scheduled
 TimeoutStartSec=45min
 Nice=10

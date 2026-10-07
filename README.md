@@ -99,17 +99,20 @@ La playlist YouTube Music viene creata con lo stesso nome della playlist Spotify
 La copertina non si può impostare via API, quindi quella di Spotify viene salvata in `data/cover.jpg`.
 Se vuoi, caricala una volta a mano da YouTube Music (modifica playlist → copertina).
 
-### 8. Esecuzione automatica giornaliera
+### 8. Esecuzione automatica all'accensione
 ```bash
 deploy/install_timer.sh
 ```
-Installa un timer systemd utente con `Persistent=true`: se il PC era spento all'ora prevista,
-l'esecuzione parte alla prima accensione utile.
+Installa un timer systemd utente che parte **2 minuti dopo l'accensione del PC**, anche prima del login
+(linger attivo). Lo script gira con `--scheduled`: se oggi c'è già stata una sincronizzazione riuscita
+non fa nulla, quindi i riavvii successivi nella stessa giornata non la ripetono. Se quella all'accensione
+fallisce, ci riprova al riavvio successivo. Se il PC resta acceso per giorni senza riavvii, la
+sincronizzazione automatica non riparte finché non lo riaccendi: puoi sempre lanciarla a mano.
 
 ## Comandi utili
 ```bash
-systemctl --user list-timers spotify-ytm-sync.timer      # prossima esecuzione
-systemctl --user start spotify-ytm-sync.service          # esegui subito
+.venv/bin/python sync.py                                 # esecuzione manuale (anche se già fatta oggi)
+systemctl --user list-timers spotify-ytm-sync.timer      # stato del timer
 journalctl --user -u spotify-ytm-sync -n 50              # output delle ultime esecuzioni
 tail -f logs/sync.log                                    # log dettagliato
 .venv/bin/python -m pytest -q                            # test

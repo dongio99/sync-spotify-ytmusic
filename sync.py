@@ -35,10 +35,22 @@ def setup_logging(verbose: bool) -> None:
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
 
+def ran_today(state: dict) -> bool:
+    last = state.get("last_success")
+    if not last:
+        return False
+    return datetime.fromisoformat(last).astimezone().date() == datetime.now().astimezone().date()
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dry-run", action="store_true", help="calcola cosa farebbe senza scrivere nulla")
     ap.add_argument("-v", "--verbose", action="store_true")
+    ap.add_argument(
+        "--scheduled",
+        action="store_true",
+        help="esecuzione automatica: salta se oggi c'è già stata un'esecuzione riuscita",
+    )
     args = ap.parse_args()
     setup_logging(args.verbose)
 
@@ -57,6 +69,9 @@ def main() -> int:
         return 2  # senza config non sappiamo nemmeno come mandare la notifica
 
     state, cache_valid = state_mod.load(cfg.state_path)
+    if args.scheduled and ran_today(state):
+        log.info("Sincronizzazione già eseguita oggi, salto (per forzarla lancia sync.py a mano)")
+        return 0
     notifier = Notifier(cfg.telegram_bot_token, cfg.telegram_chat_id, state["alerts"], cfg.alert_repeat_days)
     exit_code = 0
 
