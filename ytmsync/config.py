@@ -26,6 +26,7 @@ def _load_env(path: Path) -> None:
 class Config:
     spotify_playlist: str
     ytm_privacy: str = "PRIVATE"
+    spotify_market: str = "IT"  # paese per la ricerca Spotify (solo brani disponibili lì)
     ytm_playlist_id: str = ""
     model: str = "claude-haiku-4-5"
     max_web_searches: int = 2

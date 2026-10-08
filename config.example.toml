@@ -7,6 +7,8 @@ spotify_playlist = "https://open.spotify.com/playlist/XXXXXXXXXXXXXXXXXXXXXX"
 ytm_playlist_id = ""
 # PRIVATE, UNLISTED o PUBLIC (solo alla creazione)
 ytm_privacy = "PRIVATE"
+# Paese per la ricerca su Spotify: vengono proposti solo brani disponibili lì
+spotify_market = "IT"
 
 [ai]
 model = "claude-haiku-4-5"     # alternativa più precisa: "claude-sonnet-5-5"

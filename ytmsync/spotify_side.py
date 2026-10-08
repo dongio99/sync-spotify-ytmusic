@@ -110,7 +110,7 @@ class SpotifySide:
         queries = [f'track:"{title}" artist:"{artist}"', f"{artist} {title}"] if artist else [title]
         seen: dict[str, Track] = {}
         for q in queries:
-            res = self._call(lambda: self.sp.search(q=q, type="track", limit=10, market="from_token"), "ricerca Spotify")
+            res = self._call(lambda: self.sp.search(q=q, type="track", limit=10, market=self.cfg.spotify_market), "ricerca Spotify")
             for item in (res.get("tracks") or {}).get("items") or []:
                 t = _track(item)
                 if t and t.id not in seen:
